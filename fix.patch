@@ -34,14 +34,41 @@ index f85d49a..757df1b 100644
 
  namespace catapult { namespace model {
 
+diff --git a/src/catapult/state/AccountBalances.cpp b/src/catapult/state/AccountBalances.cpp
+index 576b430..29ccee5 100644
+--- a/src/catapult/state/AccountBalances.cpp
++++ b/src/catapult/state/AccountBalances.cpp
+@@ -34,7 +34,7 @@ namespace catapult { namespace state {
+                *this = accountBalances;
+        }
+
+-       AccountBalances::AccountBalances(AccountBalances&& accountBalances) = default;
++       //AccountBalances::AccountBalances(AccountBalances&& accountBalances) = default;
+
+        AccountBalances& AccountBalances::operator=(const AccountBalances& accountBalances) {
+                for (const auto& pair : accountBalances)
+diff --git a/src/catapult/state/AccountImportance.cpp b/src/catapult/state/AccountImportance.cpp
+index 7949753..3f2cf8c 100644
+--- a/src/catapult/state/AccountImportance.cpp
++++ b/src/catapult/state/AccountImportance.cpp
+@@ -75,7 +75,7 @@ namespace catapult { namespace state {
+                *this = accountImportance;
+        }
+
+-       AccountImportance::AccountImportance(AccountImportance&& accountImportance) = default;
++       //AccountImportance::AccountImportance(AccountImportance&& accountImportance) = default;
+
+        AccountImportance& AccountImportance::operator=(const AccountImportance& accountImportance) {
+                if (accountImportance.m_pSnapshots)
 diff --git a/src/catapult/utils/ConfigurationUtils.h b/src/catapult/utils/ConfigurationUtils.h
 index 9f98362..25f1263 100644
 --- a/src/catapult/utils/ConfigurationUtils.h
 +++ b/src/catapult/utils/ConfigurationUtils.h
 @@ -19,6 +19,7 @@
  **/
-
+ 
  #pragma once
 +#include <string.h>
  #include "ConfigurationBag.h"
  #include <unordered_set>
+ 

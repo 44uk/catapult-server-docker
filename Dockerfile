@@ -5,6 +5,7 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
   git \
   curl \
   wget \
+  vim \
   autoconf \
   automake \
   build-essential \
@@ -28,6 +29,12 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
 
 # gtest
 RUN cd /usr/src/gtest && cmake CMakeLists.txt && make && cp *.a /usr/lib && cd -
+
+# rocksdb
+RUN git clone git@github.com:facebook/rocksdb.git -b master --depth 1 \
+  && mkdir -p rocksdb/build && cd rocksdb/build \
+  && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. && make && make install \
+  && cd -
 
 # bson
 RUN git clone https://github.com/mongodb/libbson.git -b 1.9.5 --depth 1 \
