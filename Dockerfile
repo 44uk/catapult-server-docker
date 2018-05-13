@@ -15,8 +15,9 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
   libtool \
   libboost-all-dev \
   libgtest-dev \
-  librocksdb-dev
   #ninja-build \
+  #pkg-config \
+  #librocksdb-dev
   #libevent-pthreads-2.0-5 \
   #libevent-dev \
   #libzmq-dev
@@ -24,14 +25,11 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
   #libmongoc-dev \
   #libmongo-client-dev \
 
-# default python3
-#RUN mv /usr/bin/python /usr/bin/python2 && mv /usr/bin/python3 /usr/bin/python
-
 # gtest
 RUN cd /usr/src/gtest && cmake CMakeLists.txt && make && cp *.a /usr/lib && cd -
 
 # rocksdb
-RUN git clone git@github.com:facebook/rocksdb.git -b master --depth 1 \
+RUN git clone https://github.com/facebook/rocksdb.git -b v5.12.4 --depth 1 \
   && mkdir -p rocksdb/build && cd rocksdb/build \
   && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. && make && make install \
   && cd -
@@ -84,4 +82,3 @@ RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1
   #&& make publish && make
 
 WORKDIR catapult-server/_build
-  # pkg-config \
