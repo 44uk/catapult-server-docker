@@ -1,0 +1,47 @@
+diff --git a/src/catapult/io/BufferedFileStream.h b/src/catapult/io/BufferedFileStream.h
+index e2f3c7b..45ca7ba 100644
+--- a/src/catapult/io/BufferedFileStream.h
++++ b/src/catapult/io/BufferedFileStream.h
+@@ -22,6 +22,7 @@
+ #include "RawFile.h"
+ #include "Stream.h"
+ #include <vector>
++#include <cstring>
+
+ namespace catapult { namespace io {
+
+diff --git a/src/catapult/ionet/NetworkNode.h b/src/catapult/ionet/NetworkNode.h
+index 7a9d265..b8e3660 100644
+--- a/src/catapult/ionet/NetworkNode.h
++++ b/src/catapult/ionet/NetworkNode.h
+@@ -21,6 +21,7 @@
+ #pragma once
+ #include "Node.h"
+ #include <memory>
++#include <cstring>
+
+ namespace catapult { namespace ionet {
+
+diff --git a/src/catapult/model/EntityRange.h b/src/catapult/model/EntityRange.h
+index f85d49a..757df1b 100644
+--- a/src/catapult/model/EntityRange.h
++++ b/src/catapult/model/EntityRange.h
+@@ -23,6 +23,7 @@
+ #include "catapult/exceptions.h"
+ #include <memory>
+ #include <vector>
++#include <cstring>
+
+ namespace catapult { namespace model {
+
+diff --git a/src/catapult/utils/ConfigurationUtils.h b/src/catapult/utils/ConfigurationUtils.h
+index 9f98362..25f1263 100644
+--- a/src/catapult/utils/ConfigurationUtils.h
++++ b/src/catapult/utils/ConfigurationUtils.h
+@@ -19,6 +19,7 @@
+ **/
+
+ #pragma once
++#include <string.h>
+ #include "ConfigurationBag.h"
+ #include <unordered_set>

@@ -61,9 +61,13 @@ RUN git clone https://github.com/zeromq/cppzmq.git -b v4.2.3 --depth 1 \
   && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. && make && make install \
   && cd -
 
+# fix catapult build
+COPY fix.patch .
+
 # catapult
-RUN git clone https://github.com/nemtech/catapult-server.git --depth 1 \
+RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1 \
   && cd catapult-server \
+  && mv /fix.patch . && patch -p1 < fix.patch \
   && mkdir _build && cd _build \
   && cmake -DCMAKE_BUILD_TYPE=RelWithDebugInfo \
     -DBSONCXX_LIB=/usr/local/lib/libbsoncxx.so \
