@@ -14,7 +14,7 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
   python3 \
   libtool \
   libboost-all-dev \
-  libgtest-dev \
+  libgtest-dev
   #ninja-build \
   #pkg-config \
   #librocksdb-dev
