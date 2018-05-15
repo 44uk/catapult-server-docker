@@ -114,16 +114,23 @@ RUN wget https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.
 # [] ZeroMQ_DIR
 # [] cppzmq_DIR
 
+
+# find_package(Threads REQUIRED)
+# target_link_libraries(pthread)
+# undefined reference to symbol 'pthread_setname_np@@GLIBC_2.12'
+# gclibcを下げるか -lpthreadを設定して回避できるっぽいのだが…
+
 # catapult
 RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1 \
   && cd catapult-server \
-  && mkdir _build && cd _build \
-  && cmake -DCMAKE_BUILD_TYPE=RelWithDebugInfo \
-    -DPYTHON_EXECUTABLE=/usr/bin/python3 \
-    -DBSONCXX_LIB=/usr/lib/libbsoncxx.so \
-    -DMONGOCXX_LIB=/usr/lib/libmongocxx.so \
-    .. \
-  && make publish && make
+  && mkdir _build && cd _build
+
+  # && cmake -DCMAKE_BUILD_TYPE=RelWithDebugInfo \
+  #   -DPYTHON_EXECUTABLE=/usr/bin/python3 \
+  #   -DBSONCXX_LIB=/usr/lib/libbsoncxx.so \
+  #   -DMONGOCXX_LIB=/usr/lib/libmongocxx.so \
+  #   .. \
+  # && make publish && make
   # && make publish && VERBOSE=1 make
   # -DCMAKE_CXX_FLAGS="-std=gnu++1z -Wno-unused-parameter -Wno-c++0x-compat" \
   # -DCMAKE_CXX_FLAGS="-std=c++2a -Wno-unused-parameter -Wno-c++0x-compat" \
