@@ -113,10 +113,10 @@ COPY fix.patch .
 # [] ZeroMQ_DIR
 # [] cppzmq_DIR
 
+
 # catapult
 RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1 \
   && cd catapult-server \
-  && mv /fix.patch . && patch -p1 < fix.patch \
   && mkdir _build && cd _build \
   && cmake -DCMAKE_BUILD_TYPE=RelWithDebugInfo \
     -DPYTHON_EXECUTABLE=/usr/bin/python3 \
@@ -124,11 +124,13 @@ RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1
     -DMONGOCXX_LIB=/usr/lib/libmongocxx.so \
     .. \
   && make publish && VERBOSE=1 make
+    # -DCMAKE_CXX_FLAGS="-std=gnu++1z -Wno-unused-parameter -Wno-c++0x-compat" \
     # -DCMAKE_CXX_FLAGS="-std=c++2a -Wno-unused-parameter -Wno-c++0x-compat" \
     # -DCMAKE_CXX_FLAGS="-std=c++14 -Wno-unused-parameter -Wno-c++0x-compat" \
     # -DCMAKE_CXX_FLAGS="-std=gnu++17 -Wno-unused-parameter -Wno-c++0x-compat" \
     # -DBOOST_ROOT=/usr/include/boost \
     # -DLIBBSONCXX_DIR=/usr/include/bsoncxx/ \
     # -DLIBMONGOCXX_DIR=/usr/include/mongocxx/ \
+    # && mv /fix.patch . && patch -p1 < fix.patch \
 
 WORKDIR catapult-server/_build
