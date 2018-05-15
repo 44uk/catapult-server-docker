@@ -1,0 +1,13 @@
+diff --git a/CMakeGlobalSettings.cmake b/CMakeGlobalSettings.cmake
+index def79f9..ae61113 100644
+--- a/CMakeGlobalSettings.cmake
++++ b/CMakeGlobalSettings.cmake
+@@ -54,7 +54,7 @@ if(MSVC)
+        add_definitions(-DNOMINMAX)
+        add_definitions(-DWIN32_LEAN_AND_MEAN)
+ elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
+-       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
++       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -lpthread")
+
+        if("${CMAKE_BUILD_TYPE}" MATCHES "Release")
+                # - Wno-maybe-uninitialized: false positives where gcc isn't sure if an uninitialized variable is used or not
