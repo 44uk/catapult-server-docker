@@ -123,7 +123,7 @@ RUN tar xzf cppzmq-4.2.3.tar.gz && cd cppzmq-4.2.3 \
 
 
 # mongo-c
-RUN tar xzf mongo-c-driver-1.8.1.tar.gz && cd mongo-c-driver-1.8.1 \
+RUN tar xzf mongo-c-driver-1.9.5.tar.gz && cd mongo-c-driver-1.9.5 \
   && ./configure --disable-automatic-init-and-cleanup --prefix=/usr \
   && make -j4 && make install \
   && cd /tmp
@@ -135,7 +135,7 @@ RUN tar xzf mongo-c-driver-1.8.1.tar.gz && cd mongo-c-driver-1.8.1 \
 
 
 # mongo-cxx
-RUN tar xzf mongo-cxx-driver-r3.1.4.tar.gz && cd mongo-cxx-driver-r3.1.4 \
+RUN tar xzf mongo-cxx-driver-r3.2.0.tar.gz && cd mongo-cxx-driver-r3.2.0 \
   && mkdir _build && cd _build \
   && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make -j4 && make install \
   && cd /tmp
