@@ -123,28 +123,27 @@ RUN tar xzf cppzmq-4.2.3.tar.gz && cd cppzmq-4.2.3 \
 
 
 # mongo-c
-RUN tar xzf mongo-c-driver-1.9.5.tar.gz && cd mongo-c-driver-1.9.5 \
-  && ./configure --disable-automatic-init-and-cleanup --prefix=/usr \
-  && make -j4 && make install \
-  && cd /tmp
-#RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.9.5/mongo-c-driver-1.9.5.tar.gz \
-#  && tar xzf mongo-c-driver-1.9.5.tar.gz && cd mongo-c-driver-1.9.5 \
+#RUN tar xzf mongo-c-driver-1.9.5.tar.gz && cd mongo-c-driver-1.9.5 \
 #  && ./configure --disable-automatic-init-and-cleanup --prefix=/usr \
 #  && make -j4 && make install \
-#  && cd -
+#  && cd /tmp
+RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.4.2/mongo-c-driver-1.4.2.tar.gz \
+  && tar xzf mongo-c-driver-1.4.2.tar.gz && cd mongo-c-driver-1.4.2 \
+  && ./configure --disable-automatic-init-and-cleanup --prefix=/usr \
+  && make -j4 && make install \
+  && cd -
 
 
 # mongo-cxx
-RUN tar xzf mongo-cxx-driver-r3.2.0.tar.gz && cd mongo-cxx-driver-r3.2.0 \
-  && mkdir _build && cd _build \
-  && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make -j4 && make install \
-  && cd /tmp
-#RUN git clone https://github.com/mongodb/mongo-cxx-driver.git -b r3.2.0 --depth 1 \
-#  && cd mongo-cxx-driver/build \
-#  && cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr .. \
-#  && make EP_mnmlstc_core -j4 && make install \
-#  && cd -
-
+#RUN tar xzf mongo-cxx-driver-r3.2.0.tar.gz && cd mongo-cxx-driver-r3.2.0 \
+#  && mkdir _build && cd _build \
+#  && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make EP_mnmlstc_core -j4 && make -j4 && make install \
+#  && cd /tmp
+RUN git clone https://github.com/mongodb/mongo-cxx-driver.git -b r3.0.2 --depth 1 \
+  && cd mongo-cxx-driver/build \
+  && cmake -DBSONCXX_POLY_USE_BOOST=1 -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr .. \
+  && make -j4 && make install \
+  && cd -
 
 
 #RUN wget https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.gz \
@@ -165,7 +164,8 @@ RUN tar xzf mongo-cxx-driver-r3.2.0.tar.gz && cd mongo-cxx-driver-r3.2.0 \
 
 
 # catapult
-RUN tar xzf catapult-server-0.1.0.1.tar.gz && cd catapult-server-0.1.0.1 \
+RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1 \
+  && cd catapult-server \
   && mkdir _build && cd _build \
   && cmake -DCMAKE_BUILD_TYPE=RelWithDebugInfo \
     -DCMAKE_CXX_FLAGS="-pthread" \
@@ -173,8 +173,21 @@ RUN tar xzf catapult-server-0.1.0.1.tar.gz && cd catapult-server-0.1.0.1 \
     -DBSONCXX_LIB=/usr/lib/libbsoncxx.so \
     -DMONGOCXX_LIB=/usr/lib/libmongocxx.so \
     .. \
-  && make publish
-  # && VERBOSE=1 make
+  && make publish && VERBOSE=1 make
+
+WORKDIR catapult-server/_build
+
+# RUN tar xzf catapult-server-0.1.0.1.tar.gz && cd catapult-server-0.1.0.1 \
+#   && mkdir _build && cd _build \
+#   && cmake -DCMAKE_BUILD_TYPE=RelWithDebugInfo \
+#     -DCMAKE_CXX_FLAGS="-pthread" \
+#     -DPYTHON_EXECUTABLE=/usr/bin/python3 \
+#     -DBSONCXX_LIB=/usr/lib/libbsoncxx.so \
+#     -DMONGOCXX_LIB=/usr/lib/libmongocxx.so \
+#     .. \
+#   && make publish
+#   # && VERBOSE=1 make
+#WORKDIR catapult-server-0.1.0.1/_build
 
     # -DLIBBSONCXX_DIR=/usr/include \
     # -DLIBMONGOCXX_DIR=/usr/include \
@@ -188,10 +201,6 @@ RUN tar xzf catapult-server-0.1.0.1.tar.gz && cd catapult-server-0.1.0.1 \
     # -DMONGOCXX_LIB=/usr/lib/libmongocxx.so \
 
 
-
-#RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1 \
-#  && cd catapult-server \
-#  && mkdir _build && cd _build
 
   # && cmake -DCMAKE_BUILD_TYPE=RelWithDebugInfo \
   #   -DPYTHON_EXECUTABLE=/usr/bin/python3 \
@@ -209,4 +218,3 @@ RUN tar xzf catapult-server-0.1.0.1.tar.gz && cd catapult-server-0.1.0.1 \
   # -DLIBMONGOCXX_DIR=/usr/include/mongocxx/ \
   # && mv /fix.patch . && patch -p1 < fix.patch \
 
-WORKDIR catapult-server-0.1.0.1/_build
