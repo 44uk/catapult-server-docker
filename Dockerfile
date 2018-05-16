@@ -156,12 +156,18 @@ RUN tar xzf boost_1_65_1.tar.gz && cd boost_1_65_1 \
 RUN tar xzf catapult-server-0.1.0.1.tar.gz && cd catapult-server-0.1.0.1 \
   && mkdir _build && cd _build \
   && cmake -DCMAKE_BUILD_TYPE=RelWithDebugInfo \
+    -DCMAKE_CXX_FLAGS="-pthread" \
     -DPYTHON_EXECUTABLE=/usr/bin/python3 \
     -DBSONCXX_LIB=/usr/lib/libbsoncxx.so \
     -DMONGOCXX_LIB=/usr/lib/libmongocxx.so \
-    -DCMAKE_CXX_FLAGS="-pthread" \
+    -DLIBBSONCXX_DIR=/usr/include/bsoncxx/v_noabi/bsoncxx/ \
+    -DLIBMONGOCXX_DIR=/usr/include/mongocxx/v_noabi/mongocxx/ \
     .. \
   && make publish && VERBOSE=1 make
+
+
+
+
 #RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1 \
 #  && cd catapult-server \
 #  && mkdir _build && cd _build
