@@ -101,6 +101,7 @@ RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1
 
 RUN cd catapult-server/_build \
   && mkdir data \
+  && mkdir -p ../seed/mijin-test \
   && mv resources resources.bk \
   && cp -r ../resources .
 
