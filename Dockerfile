@@ -95,6 +95,13 @@ RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1
     .. \
   && make publish && make -j4
 
-RUN mkdir catapult-server/data
+# ------------------------------------
+# ここから先は作業用に都合よくやっている
+# 行儀が良いとは思ってないよ
 
-WORKDIR catapult-server/_build
+RUN cd catapult-server/_build \
+  && mkdir data \
+  && mv resources resources.bk \
+  && cp -r ../resources .
+
+WORKDIR catapult-server/_build/bin
