@@ -95,4 +95,6 @@ RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1
     .. \
   && make publish && make -j4
 
+RUN mkdir catapult-server/data
+
 WORKDIR catapult-server/_build
