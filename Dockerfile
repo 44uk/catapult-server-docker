@@ -105,4 +105,4 @@ RUN cd catapult-server/_build \
   && mv resources resources.bk \
   && cp -r ../resources .
 
-WORKDIR catapult-server/_build/bin
+WORKDIR catapult-server/_build
