@@ -39,9 +39,8 @@ RUN git clone https://github.com/zeromq/cppzmq.git -b v4.2.3 --depth 1 \
   && cd -
 
 # mongo-c
-RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.4.2/mongo-c-driver-1.4.2.tar.gz \
-  && tar xzf mongo-c-driver-1.4.2.tar.gz && cd mongo-c-driver-1.4.2 \
-  && ./configure --disable-automatic-init-and-cleanup --prefix=/usr/local \
+RUN git clone https://github.com/mongodb/mongo-c-driver.git -b 1.4.3 --depth 1 && cd mongo-c-driver \
+  && ./autogen.sh && ./configure --disable-automatic-init-and-cleanup --prefix=/usr/local \
   && make -j4 && make install \
   && cd -
 
