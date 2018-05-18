@@ -3,7 +3,34 @@
 [nemtech/catapult\-server: Catapult server](https://github.com/nemtech/catapult-server) has no documentation. This is an experimental way.
 
 
-## build environment
+## build image
+
+```
+docker build -tcatapult .
+```
+
+
+## run image
+
+```
+docker run -it -p7900 -p7901 catapult
+```
+
+
+### run server
+
+```
+# To generate nemesis block
+$ ./bin/catapult.tools.nemgen ../tools/nemgen/resources/mijin-test.properties \
+$ cp -r ../seed/mijin-test/00000 ../data/
+# Boot server
+$ bin/catapult.server
+```
+
+Change resources/*.properties as you like.
+
+
+## require environment (maybe)
 
 * cmake: 3.11.1
 * boost: 1.65.1
@@ -22,6 +49,7 @@ pass the option when building mongo-cxx.
 
 `-DBSONCXX_POLY_USE_BOOST=1`
 
+
 ### catapult-server
 
 need additional options.
@@ -30,34 +58,4 @@ need additional options.
 -DCMAKE_CXX_FLAGS="-pthread"
 -DMONGOCXX_LIB=/path/to/libmongocxx.so
 -DBSONCXX_LIB=/path/to/libbsoncxx.so
-```
-
-
-## boot
-
-### fix plugin path
-
-```
-# resources/config-user.properties
-pluginsDirectory = ./bin
-```
-
-
-### create nemesis block
-
-```
-mkdir -p seed/mijin-test
-mkdir data
-cd _build
-./bin/catapult.tools.nemgen ../tools/nemgen/resources/mijin-test.properties
-cp ../seed/mijin-test/00000 ../data/
-mv resources resources.bk
-cp -r ../resources
-```
-
-
-### run
-
-```
-./bin/catapult.server
 ```
