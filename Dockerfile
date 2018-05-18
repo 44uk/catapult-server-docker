@@ -3,8 +3,8 @@ MAINTAINER Yoshiyuki Ieyama <44uk@github.com>
 
 WORKDIR /tmp
 
-RUN sed -i.bak -e "s%http://[^ ]\+%http://ftp.riken.go.jp/Linux/ubuntu/%g" /etc/apt/sources.list
-RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
+RUN sed -i.bak -e "s%http://[^ ]\+%http://linux.yz.yamagata-u.ac.jp/ubuntu/%g" /etc/apt/sources.list
+RUN apt-get update -y && apt-get upgrade -y && apt-get clean && apt-get install -y --no-install-recommends \
   git \
   curl \
   wget \
@@ -24,7 +24,7 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get install -y \
 
 # gcc,g++ 7
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test \
-  && apt-get update && apt-get install -y gcc-7 g++-7 \
+  && apt-get update && apt-get install -y --no-install-recommends gcc-7 g++-7 \
   && apt-get clean && rm -rf /var/lib/apt/lists/* \
   && rm /usr/bin/gcc /usr/bin/g++ \
   && ln -s /usr/bin/gcc-7 /usr/bin/gcc \
@@ -67,15 +67,15 @@ RUN git clone https://github.com/zeromq/cppzmq.git -b v4.2.3 --depth 1 \
   && cd -
 
 # mongo-c
-#RUN git clone https://github.com/mongodb/mongo-c-driver.git -b 1.4.3 --depth 1 && cd mongo-c-driver \
+RUN git clone https://github.com/mongodb/mongo-c-driver.git -b 1.4.3 --depth 1 && cd mongo-c-driver \
+  && ./autogen.sh && ./configure --disable-automatic-init-and-cleanup --prefix=/usr/local \
+  && make -j4 && make install \
+  && cd -
+#RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.4.2/mongo-c-driver-1.4.2.tar.gz \
+#  && tar xzf mongo-c-driver-1.4.2.tar.gz && cd mongo-c-driver-1.4.2 \
 #  && ./configure --disable-automatic-init-and-cleanup --prefix=/usr/local \
 #  && make -j4 && make install \
 #  && cd -
-RUN wget https://github.com/mongodb/mongo-c-driver/releases/download/1.4.2/mongo-c-driver-1.4.2.tar.gz \
-  && tar xzf mongo-c-driver-1.4.2.tar.gz && cd mongo-c-driver-1.4.2 \
-  && ./configure --disable-automatic-init-and-cleanup --prefix=/usr/local \
-  && make -j4 && make install \
-  && cd -
 
 # mongo-cxx
 RUN git clone https://github.com/mongodb/mongo-cxx-driver.git -b r3.0.2 --depth 1 && cd mongo-cxx-driver/build \
@@ -100,7 +100,7 @@ RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1
 # 行儀が良いとは思ってないよ
 
 RUN cd catapult-server/_build \
-  && mkdir data \
+  && mkdir ../data \
   && mkdir -p ../seed/mijin-test \
   && mv resources resources.bk \
   && cp -r ../resources .
