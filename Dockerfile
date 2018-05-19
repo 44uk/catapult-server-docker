@@ -29,7 +29,7 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get clean && apt-get install 
 # zmqlib
 RUN git clone https://github.com/zeromq/libzmq.git -b v4.2.3 --depth 1 \
   && mkdir -p libzmq/_build && cd libzmq/_build \
-  && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. && make -j4 && make install \
+  && cmake -DCMAKE_INSTALL_PREFIX=/usr/local .. && make -j4 && make test && make install && ldconfig \
   && cd -
 
 # cppzmq
@@ -40,7 +40,7 @@ RUN git clone https://github.com/zeromq/cppzmq.git -b v4.2.3 --depth 1 \
 
 # mongo-c
 RUN git clone https://github.com/mongodb/mongo-c-driver.git -b 1.4.3 --depth 1 && cd mongo-c-driver \
-  && ./autogen.sh && ./configure --disable-automatic-init-and-cleanup --prefix=/usr/local \
+  && ./autogen.sh --with-libbson=bundled && ./configure --disable-automatic-init-and-cleanup --prefix=/usr/local \
   && make -j4 && make install \
   && cd -
 
