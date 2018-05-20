@@ -11,11 +11,10 @@ RUN apt-get update -y && apt-get upgrade -y && apt-get clean && apt-get install 
   vim \
   autoconf \
   automake \
-  apt-file \
   build-essential \
+  ca-certificates \
   cmake \
   googletest \
-  software-properties-common \
   pkg-config \
   python3 \
   libboost-all-dev \
