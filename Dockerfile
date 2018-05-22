@@ -58,22 +58,5 @@ RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1
     .. \
   && make publish && make -j4
 
-# ------------------------------------
-# ここから先は作業用に都合よくやっている
-# 行儀が良いとは思ってないよ
-
-COPY patch/config-user.patch .
-RUN cd catapult-server \
-  && patch -p1 < /tmp/config-user.patch \
-  && mkdir -p seed/mijin-test \
-  && mkdir data \
-  && cd _build \
-  && mv resources resources.bk \
-  && cp -r ../resources .
-
-  # # To generate nemesis block
-  # ./bin/catapult.tools.nemgen ../tools/nemgen/resources/mijin-test.properties \
-  # cp -r ../seed/mijin-test/00000 ../data/
-  # bin/catapult.server
-
-WORKDIR catapult-server/_build
+ENV PATH $PATH:/tmp/catapult-server/_build/bin
+WORKDIR /tmp/catapult-server/_build/bin
