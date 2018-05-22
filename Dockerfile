@@ -5,20 +5,17 @@ WORKDIR /tmp
 
 RUN sed -i.bak -e "s%http://[^ ]\+%http://linux.yz.yamagata-u.ac.jp/ubuntu/%g" /etc/apt/sources.list
 RUN apt-get update -y && apt-get upgrade -y && apt-get clean && apt-get install -y --no-install-recommends \
-  git \
   autoconf \
   automake \
+  git \
   build-essential \
   ca-certificates \
   cmake \
   googletest \
-  pkg-config \
   python3 \
   libboost-all-dev \
   librocksdb-dev \
   libgtest-dev \
-  libssl-dev \
-  libsasl2-dev \
   libtool \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -48,7 +45,7 @@ RUN git clone https://github.com/mongodb/mongo-cxx-driver.git -b r3.0.2 --depth 
   && cd - && rm -rf mongo-cxx-driver
 
 # gtest
-RUN cd /usr/src/gtest && cmake CMakeLists.txt && make && cp *.a /usr/lib
+RUN cd /usr/src/gtest && cmake CMakeLists.txt && make -j4 && cp *.a /usr/lib
 
 # catapult
 RUN git clone https://github.com/nemtech/catapult-server.git -b master --depth 1 \
